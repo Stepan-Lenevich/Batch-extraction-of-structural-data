@@ -1,0 +1,114 @@
+#!/bin/csh
+#
+# Job: PreCl.g03
+#
+#PBS -m n
+#PBS -l nodes=1:gaussian
+#PBS -l ncpus=2
+#PBS -l walltime=5:00:00
+#PBS -l mem=1000mb
+#PBS -e name.e
+#PBS -o name.o
+#
+module add g03/d01
+if ( ! -d /scratch/$USER ) then
+mkdir /scratch/$USER
+endif
+mkdir /scratch/$USER/$PBS_JOBID
+cd $PBS_O_WORKDIR
+setenv GAUSS_SCRDIR /scratch/$USER/$PBS_JOBID
+57limit stacksize unlimited
+/usr/bin/time g03 < PreCl.g03 >& PreCl.out
+job_sub_notes.pbs
+#!/bin/csh
+#
+# Job: PreCl.g03
+# Name to appear in the queue, use any
+#
+#PBS -m n
+#PBS -l nodes=1:gaussian
+#PBS -l ncpus=2
+# Number of nodes - use one
+# Number of processors, match the value from
+input file
+#PBS -l walltime=5:00:00 # Maximum time of the run.
+#PBS -l mem=1000mb # Maximum memory to use, match the
+value from input file
+#PBS -e name.e # Name of the error file
+#PBS -o name.o #
+#
+module add g03/d01
+# Load Gaussian 03 program
+if ( ! -d /scratch/$USER ) then # If the user has no scratch space
+mkdir /scratch/$USER # Create it
+endif
+mkdir /scratch/$USER/$PBS_JOBID
+58
+# Create directory for current jobcd $PBS_O_WORKDIR
+# Go do directory for current job
+setenv GAUSS_SCRDIR /scratch/$USER/$PBS_JOBID
+limit stacksize unlimited
+/usr/bin/time g03 < PreCl.g03 >& PreCl.out
+#job type, input and output
+file names
+Me3P_Pre_Cl_TS.g03
+%nproc=4
+%mem=4000Mb
+%chk=TS.chk
+# b3lyp/6-31G(d) opt=(ts,calcfc,noeigentest) freq
+$DATA
+0 1
+Cl 0
+2.831770 -2.247976 -0.015635
+P 0 -2.007844 -0.288477 -0.037626
+C 0 -3.355477 -1.327607 -0.777018
+C 0 -2.632105 -0.014778
+C 0 -2.313297
+1.686315
+1.361849 -0.823759
+H 0 -3.167222 -1.466334 -1.845661
+H 0 -4.339919 -0.864718 -0.646463
+H 0 -3.360704 -2.312532 -0.300968
+H 0 -3.648277
+0.394256
+1.688265
+59H 0 -1.970551
+0.680217 2.211897
+H 0 -2.631197 -0.963358 2.231564
+H 0 -1.626620 2.102438 -0.403589
+H 0 -2.129284 1.296487 -1.900198
+H 0 -3.341348 1.702607 -0.659697
+C 0 0.760702 -0.895774
+0.084911
+C 0 1.185344
+0.327914
+0.695967
+C 0 1.615432
+1.437616
+0.036479
+C 0 2.052852
+2.650717
+0.808315
+C 0 1.713926
+1.556448 -1.457127
+H 0 0.685638 -1.019994 -0.982968
+H 0 0.382008 -1.699647
+0.693542
+H 0 1.175629
+0.346604
+1.784685
+H 0 1.460582
+3.527670
+0.516878
+H 0 1.960869
+2.508846
+1.887487
+H 0 3.097742
+2.893571
+0.574721
+H 0 2.759779
+1.725214 -1.744429
+H 0 1.352863
+0.679861 -1.995455
+H 0 1.153313
+2.433236 -1.803925
