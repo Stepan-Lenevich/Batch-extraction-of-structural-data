@@ -1,0 +1,17 @@
+#!/usr/bin/perl
+my $output_name = "Zn3TS.out" ;
+#
+my $output_name = "name.out" ;
+my @dirs=();
+my $start= 'Sum of electronic and thermal Free Energies';
+open ( LIST, "< list.txt" ); while (<LIST>){chomp; push(@dirs, $_); } close
+( LIST );
+foreach my $dirname (@dirs) {
+$filename = $dirname . "\/" . $output_name ;
+open ( IN, "< $filename" ); my $yes_no=0; my $result = (); my @inline = ();
+while (<IN>) {if ( /$start/ ){
+chomp (@inline = split ( / /, $_)) ; $result = $inline[-1];
+print " $dirname $inline[-1] OK\n" ; $yes_no=1; close ( IN );}}
+if ($yes_no==0) {print " $dirname BAD \n" ; close ( IN );}
+}
+print "\nDone\n";
