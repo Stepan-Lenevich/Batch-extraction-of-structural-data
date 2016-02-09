@@ -1,0 +1,33 @@
+#!/usr/bin/perl
+#`ls >list.txt`;
+$cs_columns =17;
+@e_type = ( "All" , "C" , "CD2" , "CD3" , "O" );
+@curr_folders = ();
+open ( LIST, "< list.txt" );
+while (<LIST>) { chomp; push(@curr_folders , $_ );}
+close (LIST);
+#print @curr_folders ;
+foreach $e_inp (@e_type){ $i=0;
+$to = $e_inp . ".txt";
+foreach $folder (@curr_folders){
+@logout = (".log" , ".out");
+$line = 0;
+foreach $lout (@logout){
+107$efile = $folder . "/" . $e_inp . $lout ;
+open ( IN, "< $efile" );
+while ( <IN> ) {
+if ( / Sum of electronic and thermal Free Energies/ ) {
+@s = split( /\s/, $_) ; chomp($line = $s[15]) ;
+close ( IN );
+}
+}
+}
+# $final = $folder . "\t" . $line . "\n";
+$j=$i%$cs_columns; $init="";
+if ($j==0){$init = "\n" . $folder . "\t" ; }
+$final = $init . $line . "\t";
+open ( OUT, ">> $to" ); print OUT $final; close ( OUT );
+$i++;
+}
+}
+print "\ncheck results\n";
