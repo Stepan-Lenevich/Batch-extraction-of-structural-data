@@ -1,0 +1,55 @@
+#!/usr/bin/perl
+$pwd = `pwd`; chomp ( $pwd ); # set present working directory
+$input = "$pwd/name.g03";
+$jobfile = "$pwd/qsub.pbs";
+# @co_set=(1.4,1.5,1.6,1.8);
+# @co_set=(2.0,2.1,2.2,2.3);
+# @co_set=(2.4,2.5);
+# @co_set=(2.7);
+@co_set=(3.0);
+@cs_set=(3.5);
+# @co_set=(1.4,1.5,1.6,1.8); # @co_set=(2.0,2.1,2.2,2.3); # @co_set=(2.4,2.5); #
+@co_set=(2.7,3.0);
+# @co_set=(1.4,1.5,1.6,1.8); # @co_set=(2.0,2.1,2.2,2.3,2.4); #
+@co_set=(2.5,2.7,3.0);
+# @cs_set=(1.8,1.9,2.0,2.3); # @cs_set=(2.6,2.7,2.8,2.9,3.0); #
+@cs_set=(3.3,3.6,3.8);
+#`mkdir work`;
+100foreach $x (@co_set){
+foreach $y (@cs_set){
+$rX = sprintf("%.3f", $x);
+$rY = sprintf("%.3f", $y);
+$dirname = $x * 100 . "_" . $y * 100;
+` mkdir work/$dirname`;
+` cp $jobfile work/$dirname/. `; # . to preserve the file name
+` cp $input
+work/$dirname/.`;
+open ( TMP, "> tmp" ); $str1 = "15 24 $rX F\n"; print TMP $str1; close ( TMP );
+` cat tmp \>\> work/$dirname/name.g03`;
+open ( TMP, "> tmp" ); $str2 = "15 12 $rY F\n"; print TMP $str2; close ( TMP );
+` cat tmp \>\> work/$dirname/name.g03`;
+chdir work;
+chdir $dirname;
+`qsub qsub.pbs`;
+chdir '..'; chdir '..'; $line = $rX . "_" . $rY . "\n" ; print $line ;
+}}
+print "check results";
+101This Perl script allows batch submission of the ZPE calculation for
+isotopologues
+#!/usr/bin/perl
+open( DIRILST, "< dirlist.txt " ) or print "\n\tCould not open $step\n" and die;
+while ( <DIRILST> ) {
+chomp($location=$_);
+print "location is $location \n";
+$path = $location . "/\. ";
+print "path is $path \n";
+` cp All.g03 $path`;
+` cp C.g03 $path`;
+` cp CD2.g03 $path`;
+` cp CD3.g03 $path`;
+` cp O.g03 $path`;
+` cp qsubI.pbs $path`;
+`$sub`;
+chdir $location; `qsub qsubI.pbs`; chdir '..'; # chdir '..';
+# `qsub qsub.pbs`;}
+close ( DIRILST );
