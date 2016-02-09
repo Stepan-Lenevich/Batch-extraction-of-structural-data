@@ -1,0 +1,51 @@
+#!/usr/bin/perl
+%conv = qw(
+1 H
+2 He
+3 Li
+4 Be
+5 B
+6 C
+7 N
+8 O
+9 F
+10 Ne
+11 Na
+12 Mg
+13 Al
+14 Si
+15 P
+16 S
+17 Cl
+18 Ar
+10319 K
+20 Ca
+30 Zn
+);
+open ( OUT, "> RESULT.gjc" );
+print OUT "" ; close ( OUT );
+open( OUT, " > RESULT.gjc" ) or print "\n\tCould not open seq\n" and die;
+open( IN, "< convert" ) or print "\n\tCould not open in\n" and die;
+open( TMP, " > tmp" );
+$heading = " -1 1\n";
+print TMP $heading; close ( TMP );
+` cat tmp \>\> RESULT.gjc`;
+while ( <IN> ) {
+tr/ / /s;
+#print ("$_");
+@el = split ( / /, $_) ;
+$atomic_number=$el[2];
+#print ("atomic number is $atomic_number\n");
+104$element = $convExt;
+#print("element is $element\n");
+open ( TMP, "> tmp" );
+$final_output = $element . " " . $el[3] . " " . $el[4] . " " . $el[5] . " " . $el[6];
+#print ("$final_output\n");
+print TMP $final_output; close ( TMP );
+` cat tmp \>\> RESULT.gjc`;
+} ;
+unlink "tmp";
+close ( OUT );
+#open ( OUT, ">> RESULT.gjc" ); print OUT "\n\n" ; close ( OUT );
+open( CLEAN, " > convert" );
+print CLEAN ""; close ( CLEAN );
